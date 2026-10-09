@@ -1,0 +1,205 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Existing prototype tokens */
+  --color-primary: #162B22;
+  --color-primary-container: #102019;
+  --color-forest: #162B22;
+  --color-forest-dark: #102019;
+  --color-emerald: #245E3F;
+  --color-canvas: #F5F2EB;
+  --color-stone: #ECE7DE;
+  --color-charcoal: #141715;
+
+  /* Official Public Website tokens */
+  --vouch-forest: #162B22;
+  --vouch-forest-dark: #102019;
+  --vouch-forest-light: #234335;
+  --vouch-ivory: #F5F2EB;
+  --vouch-ivory-warm: #ECE7DE;
+  --vouch-stone: #E6EDE8;
+  --vouch-border: #DFD9CE;
+  --vouch-border-subtle: #E8E3DA;
+  --vouch-charcoal: #141715;
+  --vouch-text-secondary: #484F4A;
+  --vouch-text-muted: #727A75;
+  --vouch-copper: #C2672B;
+  --vouch-copper-light: #FAF0E6;
+  --vouch-gold: #C2672B;
+  --vouch-emerald: #245E3F;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: #F5F2EB;
+  color: #141715;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.custom-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Security Guilloche subtle background pattern for Passport */
+.guilloche-pattern {
+  background-color: #ffffff;
+  background-image: radial-gradient(#162B22 0.5px, transparent 0.5px), radial-gradient(#245E3F 0.5px, #ffffff 0.5px);
+  background-size: 20px 20px;
+  background-position: 0 0, 10px 10px;
+}
+
+/* Tactile Stamp effect */
+.tactile-stamp {
+  border: 2px dashed #245E3F;
+  transform: rotate(-1.5deg);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Mechanical click effect */
+.active-press:active {
+  transform: translateY(1px);
+}
+
+/* Editorial typography utilities */
+.font-display {
+  font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  letter-spacing: -0.03em;
+}
+
+.font-editorial-mono {
+  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+/* Micro animations for landing page */
+@keyframes fadeInSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInSlideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Page enter transition */
+@keyframes pageFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-page-enter {
+  animation: pageFadeIn 220ms ease-out forwards;
+}
+
+/* Scroll Reveal Tokens & Classes */
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(var(--reveal-distance, 24px));
+  transition: opacity var(--reveal-duration, 600ms) cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 0ms),
+              transform var(--reveal-duration, 600ms) cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 0ms);
+}
+
+.reveal-on-scroll.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Variant: Passport Reveal (opacity + scale 0.97 -> 1 + translateY) */
+.reveal-passport {
+  opacity: 0;
+  transform: translateY(20px) scale(0.97);
+  transition: opacity 700ms cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 0ms),
+              transform 700ms cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 0ms);
+}
+
+.reveal-passport.is-revealed {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* Variant: Editorial Image Reveal (scale 1.04 -> 1) */
+.reveal-image-container {
+  overflow: hidden;
+}
+
+.reveal-image-zoom {
+  transform: scale(1.04);
+  transition: transform 900ms cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 0ms);
+}
+
+.is-revealed .reveal-image-zoom,
+.reveal-image-zoom.is-revealed {
+  transform: scale(1);
+}
+
+/* Button micro-interaction (scale 1 -> 1.015, restrained, fast) */
+.vouch-btn {
+  transition: transform 180ms ease, background-color 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.vouch-btn:hover {
+  transform: scale(1.015);
+}
+
+.vouch-btn:active {
+  transform: scale(0.99);
+}
+
+/* Mobile responsive adjustments: reduce travel distance on mobile */
+@media (max-width: 640px) {
+  .reveal-on-scroll {
+    --reveal-distance: 12px;
+  }
+}
+
+/* Accessibility: Respect prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal-on-scroll,
+  .reveal-passport,
+  .reveal-image-zoom,
+  .animate-page-enter,
+  .animate-fade-in-up {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+/* Hide horizontal scrollbar but keep horizontal scrolling functional */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
